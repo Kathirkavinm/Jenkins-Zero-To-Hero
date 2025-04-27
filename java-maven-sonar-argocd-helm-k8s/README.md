@@ -60,3 +60,24 @@ Steps:
        7.2 Monitor the pipeline stages and fix any issues that arise.
 
 This end-to-end Jenkins pipeline will automate the entire CI/CD process for a Java application, from code checkout to production deployment, using popular tools like SonarQube, Argo CD, Helm, and Kubernetes.
+
+
+dockerfile used to create the container which run the jenkins jobs
+
+root@jenkins:~/my-jenkins-agent# cat Dockerfile
+# Start with a base image having Java 17
+FROM eclipse-temurin:17-jdk-jammy
+
+# Install Maven and Docker CLI
+RUN apt-get update && \
+    apt-get install -y maven docker.io && \
+    apt-get clean
+
+# Optional: Show versions (good for debugging)
+RUN java -version && mvn -version && docker --version
+
+# Set a working directory (optional but good)
+WORKDIR /workspace
+
+root@jenkins:~/my-jenkins-agent#
+
